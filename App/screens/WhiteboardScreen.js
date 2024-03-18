@@ -1,12 +1,13 @@
 import { Text, View } from "react-native";
 import React from "react";
 import { styles } from "../stylesheets/WhiteboardScreen.style";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const WhiteboardScreen = () => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text>WhiteboardScreen</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 
