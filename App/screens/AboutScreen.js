@@ -42,7 +42,7 @@ const AboutScreen = () => {
 
       {/* App Version Text Lavel */}
       <View style={styles.appVersionTextLabelWrapper}>
-        <Text style={styles.textLabelWrapper}>Developed by: pACEdor</Text>
+        <Text style={styles.textLabelWrapper}>Developed by: sACEdor</Text>
         <Text style={styles.textLabelWrapper}>{APP_VERSION}</Text>
       </View>
     </SafeAreaView>
