@@ -12,6 +12,8 @@ import {
   HOME_SCREEN,
 } from "./StaticVariable";
 
+const loggerClass = "[StaticMethod.js]";
+
 /**
  * Check if we are in Add Expense Screen based from screen mode
  * @param {*} string
@@ -136,6 +138,58 @@ const clearOrSetToDefaultValuesAfterSaved = ({
 };
 
 /**
+ * Do Calculation..
+ * @param {*} param0
+ */
+const doCalculation = ({
+  dispatch,
+  expensesData,
+  maxLimit,
+  previousTotalExpenses,
+  difference,
+  notPartOfBudgetTotalSpending,
+  setDifference,
+  setNotPartOfBudgetTotalSpending,
+  setCurrentTotalExpenses,
+  setPartOfBudgetTotalSpending,
+  setCalculatedCriticalExpenses,
+}) => {
+  calculateCurrenTotalExpense({
+    dispatch,
+    setCurrentTotalExpenses,
+    expensesData,
+  });
+
+  calculateDifference({
+    dispatch,
+    setDifference,
+    maxLimit,
+    previousTotalExpenses,
+  });
+
+  calculateNotPartOfBudgetTotalSpending({
+    dispatch,
+    setNotPartOfBudgetTotalSpending,
+    expensesData,
+  });
+
+  calculatePartOfBudgetTotalSpending({
+    dispatch,
+    setPartOfBudgetTotalSpending,
+    expensesData,
+  });
+
+  calculateCriticalExpensesValue({
+    dispatch,
+    setCalculatedCriticalExpenses,
+    maxLimit,
+    previousTotalExpenses,
+    difference,
+    notPartOfBudgetTotalSpending,
+  });
+};
+
+/**
  * Calculate Current Total Expenses
  * @param {*} param0
  * @returns
@@ -145,7 +199,6 @@ const calculateCurrenTotalExpense = ({
   setCurrentTotalExpenses,
   expensesData,
 }) => {
-  const loggerClass = "[StaticMethod.js]";
   let total = 0;
 
   if (expensesData.length > 0) {
@@ -304,4 +357,5 @@ export {
   calculateNotPartOfBudgetTotalSpending,
   calculatePartOfBudgetTotalSpending,
   calculateCriticalExpensesValue,
+  doCalculation,
 };

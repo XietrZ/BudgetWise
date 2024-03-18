@@ -3,11 +3,17 @@ import React, { useEffect, useState } from "react";
 import Colors from "../constants/Color";
 import { styles } from "../stylesheets/ModalPopUp.style";
 import {
+  calculateCriticalExpensesValue,
+  calculateCurrenTotalExpense,
+  calculateNotPartOfBudgetTotalSpending,
+  calculatePartOfBudgetTotalSpending,
   clearOrSetToDefaultValuesAfterSaved,
   convertScreenModeToReadable,
+  doCalculation,
   formatNumberRemoveComma,
   formatNumberfromNormalNumberToCommaAndTwoDecimalPlaces,
   isAreWeInAddExpenseScreen,
+  calculateDifference,
 } from "../constants/StaticMethod";
 import {
   ADD_EXPENSE_SCREEN,
@@ -36,6 +42,15 @@ import {
   setMaxLimit,
   setPartOfBudget,
   setPreviousTotalExpenses,
+  setCurrentTotalExpenses,
+  selectDifference,
+  selectNotPartOfBudgetTotalSpending,
+  setNotPartOfBudgetTotalSpending,
+  setPartOfBudgetTotalSpending,
+  setCalculatedCriticalExpenses,
+  selectCurrentTotalExpenses,
+  selectPartOfBudgetTotalSpending,
+  selectCalculatedCriticalExpenses,
 } from "../slices/navSlice";
 import { useNavigation } from "@react-navigation/native";
 
@@ -55,6 +70,17 @@ const ModalPopUp = ({
   const expensesDataCounter = useSelector(selectExpensesDataCounter);
   const maxLimit = useSelector(selectMaxLimit);
   const previousTotalExpenses = useSelector(selectPreviousTotalExpenses);
+  const difference = useSelector(selectDifference);
+  const notPartOfBudgetTotalSpending = useSelector(
+    selectNotPartOfBudgetTotalSpending
+  );
+  const currentTotalExpenses = useSelector(selectCurrentTotalExpenses);
+  const partOfBudgetTotalSpending = useSelector(
+    selectPartOfBudgetTotalSpending
+  );
+  const calculatedCriticalExpenses = useSelector(
+    selectCalculatedCriticalExpenses
+  );
 
   const navigation = useNavigation();
 
@@ -64,9 +90,6 @@ const ModalPopUp = ({
     modelPopUpMode == MODAL_POP_UP_SAVE &&
     (screenMode == EXPENSE_SCREEN || screenMode == ADD_EXPENSE_SCREEN)
   ) {
-    console.log("");
-    console.log("");
-    console.log("");
     console.log("");
     console.log(
       loggerClass,
@@ -132,7 +155,21 @@ const ModalPopUp = ({
                           setExpensesDataCounter(expensesDataCounter + 1)
                         );
 
-                        alert("Saved Successfully!");
+                        doCalculation({
+                          dispatch,
+                          expensesData,
+                          maxLimit,
+                          previousTotalExpenses,
+                          difference,
+                          notPartOfBudgetTotalSpending,
+                          setDifference,
+                          setNotPartOfBudgetTotalSpending,
+                          setCurrentTotalExpenses,
+                          setPartOfBudgetTotalSpending,
+                          setCalculatedCriticalExpenses,
+                        });
+
+                        alert("Saved New Expense Successfully!");
                       }
                     } else if (EXPENSE_SCREEN == screenMode) {
                       const { id, amount, date, description, isPartOfBudget } =
@@ -156,7 +193,22 @@ const ModalPopUp = ({
                         newExpensesData
                       );
                       dispatch(setExpensesData(newExpensesData));
-                      alert("Saved Successfully!");
+
+                      doCalculation({
+                        dispatch,
+                        expensesData,
+                        maxLimit,
+                        previousTotalExpenses,
+                        difference,
+                        notPartOfBudgetTotalSpending,
+                        setDifference,
+                        setNotPartOfBudgetTotalSpending,
+                        setCurrentTotalExpenses,
+                        setPartOfBudgetTotalSpending,
+                        setCalculatedCriticalExpenses,
+                      });
+
+                      alert("Saved New Values of Expense Successfully!");
                     } else if (TOTAL_SCREEN == screenMode) {
                       setEdit(false);
 
@@ -176,6 +228,20 @@ const ModalPopUp = ({
                         )
                       );
 
+                      doCalculation({
+                        dispatch,
+                        expensesData,
+                        maxLimit,
+                        previousTotalExpenses,
+                        difference,
+                        notPartOfBudgetTotalSpending,
+                        setDifference,
+                        setNotPartOfBudgetTotalSpending,
+                        setCurrentTotalExpenses,
+                        setPartOfBudgetTotalSpending,
+                        setCalculatedCriticalExpenses,
+                      });
+
                       alert("Max Limit and Total Expenses Saved Successfully!");
                     }
                   } else if (MODAL_POP_CLEAR_EXPENSE == modelPopUpMode) {
@@ -184,12 +250,41 @@ const ModalPopUp = ({
                       (item) => item.id != id
                     );
                     dispatch(setExpensesData(newExpensesData));
+
+                    doCalculation({
+                      dispatch,
+                      expensesData,
+                      maxLimit,
+                      previousTotalExpenses,
+                      difference,
+                      notPartOfBudgetTotalSpending,
+                      setDifference,
+                      setNotPartOfBudgetTotalSpending,
+                      setCurrentTotalExpenses,
+                      setPartOfBudgetTotalSpending,
+                      setCalculatedCriticalExpenses,
+                    });
                     alert("Expense is Deleted Successfully!");
 
                     navigation.goBack();
                   } else if (MODAL_POP_CLEAR_ALL_EXPENSES == modelPopUpMode) {
                     dispatch(setExpensesData([]));
                     dispatch(setExpensesDataCounter(0));
+
+                    doCalculation({
+                      dispatch,
+                      expensesData,
+                      maxLimit,
+                      previousTotalExpenses,
+                      difference,
+                      notPartOfBudgetTotalSpending,
+                      setDifference,
+                      setNotPartOfBudgetTotalSpending,
+                      setCurrentTotalExpenses,
+                      setPartOfBudgetTotalSpending,
+                      setCalculatedCriticalExpenses,
+                    });
+
                     alert("ALL EXPENSES are Deleted Successfully!");
                   }
                 } catch (error) {
@@ -208,6 +303,20 @@ const ModalPopUp = ({
                 if (TOTAL_SCREEN == screenMode) {
                   dispatch(setMaxLimit(formatNumberRemoveComma(maxLimit)));
                   setEdit(true);
+
+                  doCalculation({
+                    dispatch,
+                    expensesData,
+                    maxLimit,
+                    previousTotalExpenses,
+                    difference,
+                    notPartOfBudgetTotalSpending,
+                    setDifference,
+                    setNotPartOfBudgetTotalSpending,
+                    setCurrentTotalExpenses,
+                    setPartOfBudgetTotalSpending,
+                    setCalculatedCriticalExpenses,
+                  });
                 }
               }}
             >

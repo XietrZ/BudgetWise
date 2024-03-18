@@ -49,6 +49,7 @@ import {
   selectExpensesDataCounter,
   setMaxLimit,
   setPreviousTotalExpenses,
+  selectPartOfBudgetTotalSpending,
 } from "../slices/navSlice";
 import {
   ADD_EXPENSE_SCREEN,
@@ -75,12 +76,16 @@ export default function HomeScreen() {
   const notPartOfBudgetTotalSpending = useSelector(
     selectNotPartOfBudgetTotalSpending
   );
+  const partOfBudgetTotalSpending = useSelector(
+    selectPartOfBudgetTotalSpending
+  );
   const previousTotalExpenses = useSelector(selectPreviousTotalExpenses);
   const calculatedCriticalExpenses = useSelector(
     selectCalculatedCriticalExpenses
   );
   const difference = useSelector(selectDifference);
   const expensesDataCounter = useSelector(selectExpensesDataCounter);
+  const currentTotalExpenses = useSelector(selectCurrentTotalExpenses);
 
   const [isShowModal, setShowModal] = useState(false);
   const [fontsLoaded] = useFonts({
@@ -145,38 +150,54 @@ export default function HomeScreen() {
   }, [previousTotalExpenses]);
 
   // ************************************* CALCULATE () **********************************
-  calculateCurrenTotalExpense({
-    dispatch,
-    setCurrentTotalExpenses,
-    expensesData,
+
+  //-->calculateCurrenTotalExpense
+  useEffect(() => {
+    calculateCurrenTotalExpense({
+      dispatch,
+      setCurrentTotalExpenses,
+      expensesData,
+    });
   });
 
-  calculateDifference({
-    dispatch,
-    setDifference,
-    maxLimit,
-    previousTotalExpenses,
+  //-->calculateDifference
+  useEffect(() => {
+    calculateDifference({
+      dispatch,
+      setDifference,
+      maxLimit,
+      previousTotalExpenses,
+    });
   });
 
-  calculateNotPartOfBudgetTotalSpending({
-    dispatch,
-    setNotPartOfBudgetTotalSpending,
-    expensesData,
+  //-->calculateNotPartOfBudgetTotalSpending
+  useEffect(() => {
+    calculateNotPartOfBudgetTotalSpending({
+      dispatch,
+      setNotPartOfBudgetTotalSpending,
+      expensesData,
+    });
   });
 
-  calculatePartOfBudgetTotalSpending({
-    dispatch,
-    setPartOfBudgetTotalSpending,
-    expensesData,
+  //-->calculatePartOfBudgetTotalSpending
+  useEffect(() => {
+    calculatePartOfBudgetTotalSpending({
+      dispatch,
+      setPartOfBudgetTotalSpending,
+      expensesData,
+    });
   });
 
-  calculateCriticalExpensesValue({
-    dispatch,
-    setCalculatedCriticalExpenses,
-    maxLimit,
-    previousTotalExpenses,
-    difference,
-    notPartOfBudgetTotalSpending,
+  //-->calculateCriticalExpensesValue
+  useEffect(() => {
+    calculateCriticalExpensesValue({
+      dispatch,
+      setCalculatedCriticalExpenses,
+      maxLimit,
+      previousTotalExpenses,
+      difference,
+      notPartOfBudgetTotalSpending,
+    });
   });
 
   // ************************************* Fonts **********************************
