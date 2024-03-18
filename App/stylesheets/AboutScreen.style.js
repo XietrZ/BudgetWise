@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import React from "react";
 import Colors from "../constants/Color";
 
 export const styles = StyleSheet.create({
@@ -6,7 +7,6 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.backgroundBg,
     flex: 1,
   },
-
   headerPanelWrapper: {
     flexDirection: "row",
     // justifyContent: "center",
@@ -14,14 +14,13 @@ export const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 10,
   },
-
-  backBtnAddExpenseLabelPanelWrapper: {
+  backBtnAboutScreenLabelPanelWrapper: {
     flexDirection: "row",
     flex: 1,
     alignItems: "center",
   },
 
-  spendingSummaryLabelTextWrapper: {
+  aboutScreenLabelTextWrapper: {
     color: "white",
     marginLeft: 19,
     fontFamily: "Grandstander-Regular",
@@ -34,13 +33,17 @@ export const styles = StyleSheet.create({
     fontSize: 15,
   },
 
-  textLabelWrapper_2: {
-    fontSize: 20,
-    marginLeft: -15,
-  },
-
-  topPanelWrapper: {
+  centerMessageTextLabelWrapper: {
+    // backgroundColor: "orange",
+    flex: 1,
     alignItems: "center",
-    flexDirection: "row",
+    justifyContent: "center",
+  },
+  appVersionTextLabelWrapper: {
+    // flex: 1,
+    //   backgroundColor: "cyan",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    marginBottom: 20,
   },
 });

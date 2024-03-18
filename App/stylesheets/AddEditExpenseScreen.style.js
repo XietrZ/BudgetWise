@@ -1,7 +1,8 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+import React from "react";
 import Colors from "../constants/Color";
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.backgroundBg,
     flex: 1,
@@ -21,26 +22,25 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  spendingSummaryLabelTextWrapper: {
+  addExpenseLabelTextWrapper: {
     color: "white",
     marginLeft: 19,
     fontFamily: "Grandstander-Regular",
     fontSize: 20,
   },
 
-  textLabelWrapper: {
-    color: "white",
-    fontFamily: "Grandstander-Regular",
-    fontSize: 15,
+  amountInputFieldPanelWrapper: {
+    // backgroundColor: "red",
+    marginTop: 32,
+    marginHorizontal: 52,
+    // justifyContent: "center",
   },
 
-  textLabelWrapper_2: {
-    fontSize: 20,
-    marginLeft: -15,
-  },
-
-  topPanelWrapper: {
-    alignItems: "center",
-    flexDirection: "row",
+  enterDescriptionFieldPanelWrapper: {
+    // backgroundColor: "red",
+    marginHorizontal: 52,
+    // justifyContent: "center",
   },
 });
+
+export default styles;
