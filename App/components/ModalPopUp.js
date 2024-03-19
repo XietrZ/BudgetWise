@@ -3,17 +3,12 @@ import React, { useEffect, useState } from "react";
 import Colors from "../constants/Color";
 import { styles } from "../stylesheets/ModalPopUp.style";
 import {
-  calculateCriticalExpensesValue,
-  calculateCurrenTotalExpense,
-  calculateNotPartOfBudgetTotalSpending,
-  calculatePartOfBudgetTotalSpending,
   clearOrSetToDefaultValuesAfterSaved,
   convertScreenModeToReadable,
   doCalculation,
   formatNumberRemoveComma,
   formatNumberfromNormalNumberToCommaAndTwoDecimalPlaces,
   isAreWeInAddExpenseScreen,
-  calculateDifference,
 } from "../constants/StaticMethod";
 import {
   ADD_EXPENSE_SCREEN,
@@ -140,7 +135,11 @@ const ModalPopUp = ({
                         alert("Please add description.");
                       } else {
                         dispatch(
-                          setExpensesData([...expensesData, expenseDataToSave])
+                          setExpensesData(
+                            [...expensesData, expenseDataToSave].sort(
+                              (a, b) => b.id - a.id
+                            )
+                          )
                         );
 
                         clearOrSetToDefaultValuesAfterSaved({
@@ -249,7 +248,11 @@ const ModalPopUp = ({
                     const newExpensesData = expensesData.filter(
                       (item) => item.id != id
                     );
-                    dispatch(setExpensesData(newExpensesData));
+                    dispatch(
+                      setExpensesData(
+                        [...newExpensesData].sort((a, b) => b.id - a.id)
+                      )
+                    );
 
                     doCalculation({
                       dispatch,
